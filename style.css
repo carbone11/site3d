@@ -1,0 +1,20 @@
+/* Supprime les marges et padding par défaut */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Fond noir pour le ciel spatial */
+body {
+    background-color: #000;
+    overflow: hidden; /* Empêche le scroll */
+    font-family: Arial, sans-serif;
+}
+
+/* Canvas Three.js en plein écran */
+canvas {
+    display: block;
+    width: 100vw;
+    height: 100vh;
+}
