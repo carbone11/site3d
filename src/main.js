@@ -34,8 +34,21 @@ scene.add(sunLight);
 const loader = new THREE.TextureLoader();
 const scale = 4;
 
+// === NEBULA BACKGROUND ===
+const nebulaTex = loader.load('/site3d/assets/nebula.jpg', () => {
+    const nebulaGeo = new THREE.SphereGeometry(1000, 64, 64);
+    const nebulaMat = new THREE.MeshBasicMaterial({
+        map: nebulaTex,
+        side: THREE.BackSide,
+        transparent: true,
+        opacity: 0.7
+    });
+    const nebula = new THREE.Mesh(nebulaGeo, nebulaMat);
+    scene.add(nebula);
+});
+
 // === SUN ===
-const sunTexture = loader.load('/assets/sun.jpg');
+const sunTexture = loader.load('/site3d/assets/sun.jpg');
 const sunGeo = new THREE.SphereGeometry(5 * scale, 64, 64);
 const sunMat = new THREE.MeshBasicMaterial({ map: sunTexture });
 const sun = new THREE.Mesh(sunGeo, sunMat);
@@ -55,7 +68,7 @@ sunGlow.castShadow = false;
 scene.add(sunGlow);
 
 // === LENS FLARE ===
-const lensFlareTex = loader.load('/assets/lensflare0.png');
+const lensFlareTex = loader.load('/site3d/assets/lensflare0.png');
 const lensflare = new Lensflare();
 lensflare.addElement(new LensflareElement(lensFlareTex, 700, 0, sunLight.color));
 sunLight.add(lensflare);
@@ -112,8 +125,8 @@ function createLabel(text, color = 0xffffff) {
     return sprite;
 }
 function addPlanet(name, textureFile, bumpFile, radius, distance, speed, hasMoon = false) {
-    const tex = loader.load(`/assets/${textureFile}`);
-    const bump = bumpFile ? loader.load(`/assets/${bumpFile}`) : null;
+    const tex = loader.load(`/site3d/assets/${textureFile}`);
+    const bump = bumpFile ? loader.load(`/site3d/assets/${bumpFile}`) : null;
     const geo = new THREE.SphereGeometry(radius * scale, 32, 32);
     const mat = new THREE.MeshStandardMaterial({ map: tex, bumpMap: bump, bumpScale: 0.05 });
     const planet = new THREE.Mesh(geo, mat);
@@ -156,7 +169,7 @@ function addPlanet(name, textureFile, bumpFile, radius, distance, speed, hasMoon
     planet.add(glow);
 
     if (name === "Terre") {
-        const cloudsTex = loader.load('/assets/earth_clouds.png');
+        const cloudsTex = loader.load('/site3d/assets/earth_clouds.png');
         const cloudsGeo = new THREE.SphereGeometry(radius * scale * 1.03, 32, 32);
         const cloudsMat = new THREE.MeshPhongMaterial({
             map: cloudsTex,
@@ -182,7 +195,7 @@ function addPlanet(name, textureFile, bumpFile, radius, distance, speed, hasMoon
 
     if (hasMoon) {
         const moonGeo = new THREE.SphereGeometry(radius * scale * 0.3, 16, 16);
-        const moonTex = loader.load('/assets/moon.jpg');
+        const moonTex = loader.load('/site3d/assets/moon.jpg');
         const moonMat = new THREE.MeshStandardMaterial({ map: moonTex });
         const moon = new THREE.Mesh(moonGeo, moonMat);
         moon.castShadow = true;
@@ -879,7 +892,7 @@ const backgroundSystems = [];
 
 function addBackgroundSolarSystem(position, color = 0xffffcc, scaleFactor = 0.4) {
     // Soleil lointain avec texture réaliste
-    const starTex = loader.load('/assets/sun.jpg');
+    const starTex = loader.load('/site3d/assets/sun.jpg');
     const starGeo = new THREE.SphereGeometry(1.2 * scale * scaleFactor, 32, 32);
     const starMat = new THREE.MeshBasicMaterial({ map: starTex, transparent: true, opacity: 0.8 });
     const star = new THREE.Mesh(starGeo, starMat);
@@ -888,14 +901,14 @@ function addBackgroundSolarSystem(position, color = 0xffffcc, scaleFactor = 0.4)
 
     // 2-3 planètes fictives en orbite avec textures réalistes
     const textures = [
-        '/assets/earth.jpg',
-        '/assets/mars.jpg',
-        '/assets/jupiter.jpg',
-        '/assets/neptune.jpg',
-        '/assets/venus.jpg',
-        '/assets/uranus.jpg',
-        '/assets/mercury.jpg',
-        '/assets/saturn.jpg'
+        '/site3d/assets/earth.jpg',
+        '/site3d/assets/mars.jpg',
+        '/site3d/assets/jupiter.jpg',
+        '/site3d/assets/neptune.jpg',
+        '/site3d/assets/venus.jpg',
+        '/site3d/assets/uranus.jpg',
+        '/site3d/assets/mercury.jpg',
+        '/site3d/assets/saturn.jpg'
     ];
     const planets = [];
     for (let i = 0; i < 3; i++) {
@@ -1042,15 +1055,3 @@ window.addEventListener('resize', () => {
     renderer.setSize(window.innerWidth, window.innerHeight);
 });
 
-// === NEBULA BACKGROUND ===
-const nebulaTex = loader.load('/assets/nebula.jpg', () => {
-    const nebulaGeo = new THREE.SphereGeometry(1000, 64, 64);
-    const nebulaMat = new THREE.MeshBasicMaterial({
-        map: nebulaTex,
-        side: THREE.BackSide,
-        transparent: true,
-        opacity: 0.7
-    });
-    const nebula = new THREE.Mesh(nebulaGeo, nebulaMat);
-    scene.add(nebula);
-});
