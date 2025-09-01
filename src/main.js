@@ -205,7 +205,7 @@ addPlanet("Uranus", "uranus.jpg", null, 1, 26, 0.006);
 addPlanet("Neptune", "neptune.jpg", null, 1, 30, 0.005);
 
 // === SATURN RINGS ===
-const ringTex = loader.load('/assets/saturn_ring.jpg');
+const ringTex = loader.load('/site3d/assets/saturn_ring.jpg');
 const ringGeo = new THREE.RingGeometry(1.5 * scale, 2.5 * scale, 64);
 const ringMat = new THREE.MeshBasicMaterial({
     map: ringTex,
